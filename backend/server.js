@@ -17,24 +17,32 @@ const PORT = 5000; // Define the port number for the server
 app.use(cors()); // Enable CORS to allow frontend requests from different origins
 app.use(express.json()); // Enable parsing of JSON request bodies
 
-// Define an API endpoint to fetch businesses from Yelp
-app.get('/api/businesses', async (req, res) => {
-  // Extract query parameters from the request (e.g., location and search term)
-  const { location, term } = req.query;
-
+// Yelp API Endpoint (Fetch businesses in Chicago with < 500 Reviews)
+app.get("/yelp", async (req, res) => {
   try {
-    // Make a GET request to the Yelp API
-    const response = await axios.get('https://api.yelp.com/v3/businesses/search', {
-      headers: { Authorization: `Bearer ${process.env.YELP_API_KEY}` }, // Send API key in headers
-      params: { location, term, limit: 5 }, // Set query parameters (location, term, limit results to 5)
-    });
+      const apiKey = process.env.YELP_API_KEY;
+      const url = `https://api.yelp.com/v3/businesses/search?location=Chicago&limit=50`; 
 
-    // Send the received data back to the frontend
-    res.json(response.data.businesses);
+      const response = await axios.get(url, {
+          headers: { Authorization: `Bearer ${apiKey}` },
+      });
+
+      const yelpData = response.data.businesses
+          .filter((business) => business.review_count < 500) // Only keep businesses with < 500 reviews
+          .map((business) => ({
+              name: business.name,
+              type: business.categories[0]?.title || "Unknown",
+              price: business.price || "N/A",
+              address: business.location.address1,
+              contact: business.display_phone || "N/A",
+              rating: business.rating,
+              review_count: business.review_count, // Include review count in response
+              description: business.alias || "No description available",
+          }));
+
+      res.json(yelpData);
   } catch (error) {
-    // Handle errors and send an error response
-    //if(error) {
-    res.status(500).json({ error: error.message });
+      res.status(500).json({ error: "Failed to fetch Yelp data", details: error.message });
   }
 });
 
