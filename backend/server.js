@@ -33,7 +33,20 @@ app.get('/api/businesses', async (req, res) => {
     res.json(response.data.businesses);
   } catch (error) {
     // Handle errors and send an error response
+    //if(error) {
     res.status(500).json({ error: error.message });
+  }
+});
+
+// get specific business by name
+app.get("/business/:name", (req,res)=>{
+  const name = req.params.name;
+  const business = businesses.find((b) => b.name.toLowerCase() === name.toLowerCase());
+
+  if (business) {
+      res.json(business);
+  } else {
+      res.status(404).json({ error: "Business not found" });
   }
 });
 
