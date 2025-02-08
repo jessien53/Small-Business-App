@@ -10,7 +10,7 @@
 
     </head>
   <body>
-    <h2 id="business-name"> hyhyug</h2>
+    <h2 id="business-name"> Loading...</h2>
     <p id="business-type"></p>
     <p id="business-price"></p>
     <p id="business-address"></p>
@@ -24,13 +24,14 @@
     <script>
       async function loadBusinessData(){
         const params = new URLSearchParams(window.location.search);
-        const businessName = params.get("name");
+        const businessName = params.get("id");
         
         try{
           const response = await fetch("http://localhost:5000/yelp");
           const businesses = await response.json();
 
-          const business = businesses.find(b => b.name === businessName);
+          
+          const business = businesses.find(b => b.id === businessName);
 
           document.getElementById("business-name").textContent = business.name;
           document.getElementById("business-type").textContent = `Type: ${business.type || "Unknown"}`;
