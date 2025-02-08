@@ -11,6 +11,13 @@
 
     </head>
   <body>
+    <!-- Button to return to search -->
+    <p align="left">
+      <a href="index.html">
+          <img src="/src/assets/search.png" height="50" length="120">
+      </a>
+  </p>
+
     <h2 id="business-name"> Loading...</h2>
     <p id="business-type"></p>
     <p id="business-price"></p>
@@ -19,9 +26,6 @@
     <p id="business-rating"></p>
    
    
-
-    <a href="index.html"> Back to Search</a>
-
     <script>
       async function loadBusinessData(){
         const params = new URLSearchParams(window.location.search);
