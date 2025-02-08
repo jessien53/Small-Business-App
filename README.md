@@ -1,5 +1,5 @@
 ## Inspiration 
-Bringing communities together and uplifting small businesses.
+Bringing communities together and uplifting small businesses!
 ## What it does and how we built it
 This website makes information about small businesses in Chicago more accessible. With a back-end of JavaScript and a front-end of HTML with the aid of the Yelp Fusion API, we grabbed the information about the businesses and listed their names. Clicking on a name will show relevant information about the business.
 ## Accomplishments that we're proud of
