@@ -37,5 +37,6 @@ ul {
 
 li {
     display: inline-block;
-    margin-right: 20px;
+    margin-right: 40%;
+    margin-left: 40%;
 }

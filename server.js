@@ -42,6 +42,7 @@ app.get("/yelp", async (req, res) => {
       const page = parseInt(req.query.page) || 1; //default to page 1
       const limit = parseInt(req.query.limit) || 50;
       const offset = (page -1) * limit;
+      const ratingFilter = parseFloat(req.query.rating) || 0;
       let allBusinesses = [];
       // Make multiple requests to get more businesses
         // Yelp allows up to 1000 results with offset
@@ -90,9 +91,13 @@ app.get("/business/:name", (req,res)=>{
   const business = businesses.find((b) => b.name.toLowerCase() === name.toLowerCase());
 
   if (business) {
+    console.log("Business found: name"); // Log for debugging
       res.json(business);
   } else {
+    console.log("Business not found: ");
       res.status(404).json({ error: "Business not found" });
+      possibleReasons: "It could be a mismatch in the name or the business might not exist in the current dataset."
+
   }
 });
 
