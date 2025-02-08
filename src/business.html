@@ -12,8 +12,12 @@
   <body>
     <h2 id="business-name"> Loading...</h2>
     <p id="business-type"></p>
+    <p id="business-price"></p>
+    <p id="business-address"></p>
+    <p id="business-contact"></p>
     <p id="business-rating"></p>
-    <p id="business-location"></p>
+    <p id="business-description"></p>
+   
 
     <a href="index.html"> Back to Search</a>
 
@@ -30,8 +34,11 @@
 
           document.getElementByID("business- name").textContent = business.name;
           document.getElementByID("business- type").textContent = 'Type: ${business.type || "Unkown"}';
+          document.getElementByID("business- price").textContent = 'Price: ${business.price || "Unkown"}';
+          document.getElementByID("business- address").textContent = 'Price: ${business.address || "Unkown"}';
+          document.getElementByID("business- contact").textContent = 'Price: ${business.contact || "Unkown"}';
           document.getElementByID("business- rating").textContent = 'Rating:⭐⭐⭐⭐⭐ ${business.rating || "Unkown"}';
-          document.getElementByID("business- location").textContent = 'Location: ${business.location || "Unkown"}';
+          document.getElementByID("business- description").textContent = 'Description: ${business.description || "Unkown"}';
 
         }catch(error){
           console.error("Error loading business data:", error)
