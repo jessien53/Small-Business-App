@@ -1,6 +1,9 @@
 /*  Run backend first before frontend website using:
     node server.js
     otherwise frontend wont be able to fetch anything
+
+    if node does not run do this before running it:
+    npm install dotenv express axios cors
 */
 // Load environment variables
 import dotenv from "dotenv";
