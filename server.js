@@ -26,28 +26,53 @@ app.use(express.json()); // Enable parsing of JSON request bodies
 // Store fetched businesses in memory
 let businesses = [];
 
+// Function to fetch businesses from Yelp with pagination
+async function fetchYelpBusinesses(apiKey, offset = 0) {
+    const url = `https://api.yelp.com/v3/businesses/search?location=Chicago&limit=50&offset=${offset}`;
+    const response = await axios.get(url, {
+        headers: { Authorization: `Bearer ${apiKey}` },
+    });
+    return response.data;
+}
+
 // Yelp API Endpoint (Fetch businesses in Chicago with < 500 Reviews)
 app.get("/yelp", async (req, res) => {
   try {
       const apiKey = process.env.YELP_API_KEY;
-      const url = `https://api.yelp.com/v3/businesses/search?location=Chicago&limit=50`; 
-
-      const response = await axios.get(url, {
-          headers: { Authorization: `Bearer ${apiKey}` },
-      });
+      const page = parseInt(req.query.page) || 1; //default to page 1
+      const limit = parseInt(req.query.limit) || 50;
+      const offset = (page -1) * limit;
+      let allBusinesses = [];
+      // Make multiple requests to get more businesses
+        // Yelp allows up to 1000 results with offset
+        const numberOfRequests = 3; // This will get 150 businesses (3 * 50)
+        
+        for (let i = 0; i < numberOfRequests; i++) {
+            const offset = i * limit;
+            console.log(`Fetching businesses with offset ${offset}...`);
+            
+            const data = await fetchYelpBusinesses(apiKey, offset);
+            
+            if (data.businesses && data.businesses.length > 0) {
+                allBusinesses = [...allBusinesses, ...data.businesses];
+            } else {
+                break; // No more results
+            }
+        }
+      
 
       // Store the filtered businesses in memory
-      businesses = response.data.businesses
-      .filter((business) => business.review_count < 500)
-      .map((business) => ({
-          name: business.name,
-          type: business.categories[0]?.title || "Unknown",
-          price: business.price || "N/A",
-          address: business.location.address1,
-          contact: business.display_phone || "N/A",
-          rating: business.rating,
-          review_count: business.review_count,
-          description: business.alias || "No description available",
+      businesses = allBusinesses
+        .filter((business) => business.review_count < 500)
+        .map((business) => ({
+            name: business.name,
+            type: business.categories[0]?.title || "Unknown",
+            price: business.price || "N/A",
+            address: business.location.address1,
+            contact: business.display_phone || "N/A",
+            rating: business.rating,
+            review_count: business.review_count,
+            description: business.alias || "No description available",
       }));
 
       res.json(businesses);
