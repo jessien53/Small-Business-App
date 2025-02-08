@@ -16,13 +16,18 @@
       <img src="/src/assets/redBox.png" alt="Red Box">
     </a>
 
+    <h2>Pretty Home</h2>
+    <a href="pretty.html">
+      <img src="/src/assets/redBox.png" alt="Red Box">
+    </a>
+
     <h2> Help💞 </h2>
     <input type="text" id="search" placeholder = " 🔍 Search Local Chicago, IL 60608">
     <h3> Best Small Buisnesses near Chicago, IL 60608 </h3>
 
   <!----This is where data is imported-->
   <ul id="business-list"></ul> <!-- Dynamic List of Businesses -->
-    <p id=""no-rsults" style=" "display: none; color:red;">Try Searching a Different Name</p>"
+    <p id="no-rsults" style="display: none; color:red;">Try Searching a Different Name</p>
     <script>
         async function fetchBusinesses() {
             try {
@@ -32,12 +37,13 @@
                 const businessList = document.getElementById("business-list");
                 businessList.innerHTML = ""; 
                businesses.forEach(business=> {
-                let listItem = document.createElement("li");
-                let link = document.createElement("a");
-                link.href = '${business.uil}';
-                link.textContent = business.name;
-                listItem.appendChild(link);
-                businessList.appendChild(listItem);
+                  let listItem = document.createElement("li");
+                  let link = document.createElement("a");
+                  let encodedNAme = encodeURIComponent(business.name);
+                  link.href = `business.html?name=${encodedName}`;
+                  link.textContent = business.name;
+                  listItem.appendChild(link);
+                  businessList.appendChild(listItem);
                });
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -50,13 +56,20 @@
     document.getElementById("search").addEventListener("input", function (){
     let filter = this.value.toLowerCase();
     let items = document.querySelectorAll("#buisness-list li");
+    let found = false;
         items.forEach((item)=>{
           let text = item.textContent.toLowerCase();
-          item.style.display = text.includes(filter) ? "block" : "none";
+          if(text.inclues(filter)){
+            item.style.display = "list-item";
+            found = true;
+          }
+          else{
+            item.style.display = "none"
+          }
         });
+        document.getElementById("no-results").style.display = found ? "none" : "block";
       });
   
     </script>
-    
   </body>
   </html>
