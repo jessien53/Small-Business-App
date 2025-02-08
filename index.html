@@ -9,18 +9,15 @@
     </style>
     <link rel="stylesheet" href="/src/style.css" />
   </head>
-  
+
   <body>
-    <h2>Social Feed</h2>
+  <h2>Social Feed</h2>
     <a href="feed.html">
       <img src="/src/assets/redBox.png" alt="Red Box">
     </a>
-
-    <h2>Pretty Home</h2>
-    <a href="pretty.html">
-      <img src="/src/assets/redBox.png" alt="Red Box">
-    </a>
-
+  
+  <body>
+ 
     <h2> Help💞 </h2>
     <input type="text" id="search" placeholder = " 🔍 Search Local Chicago, IL 60608">
     <h3> Best Small Buisnesses near Chicago, IL 60608 </h3>
@@ -29,37 +26,44 @@
   <ul id="business-list"></ul> <!-- Dynamic List of Businesses -->
     <p id="no-rsults" style="display: none; color:red;">Try Searching a Different Name</p>
     <script>
-        async function fetchBusinesses() {
-            try {
-                const response = await fetch("http://localhost:5000/yelp");
-                const businesses = await response.json();
+       async function fetchBusinesses() {
+    try {
+        const response = await fetch("http://localhost:5000/yelp"); // Ensure API is running
+        const businesses = await response.json();
 
-                const businessList = document.getElementById("business-list");
-                businessList.innerHTML = ""; 
-               businesses.forEach(business=> {
-                  let listItem = document.createElement("li");
-                  let link = document.createElement("a");
-                  let encodedNAme = encodeURIComponent(business.name);
-                  link.href = `business.html?name=${encodedName}`;
-                  link.textContent = business.name;
-                  listItem.appendChild(link);
-                  businessList.appendChild(listItem);
-               });
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        }
+        const businessList = document.getElementById("business-list");
+        businessList.innerHTML = ""; // Clear previous results
+
+        businesses.forEach(business => {
+            let listItem = document.createElement("li");
+            let link = document.createElement("a");
+
+            // ✅ Corrected business URL link using template literals
+            link.href = `business.html?id=${business.id}`; 
+            link.textContent = business.name;
+
+            listItem.appendChild(link);
+            businessList.appendChild(listItem);
+        });
+
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    }
+}
+
+// Fetch businesses when the page loads
+fetchBusinesses();
 
         // Fetch businesses when the page loads
         fetchBusinesses();
 
     document.getElementById("search").addEventListener("input", function (){
     let filter = this.value.toLowerCase();
-    let items = document.querySelectorAll("#buisness-list li");
+    let items = document.querySelectorAll("#business-list li");
     let found = false;
         items.forEach((item)=>{
           let text = item.textContent.toLowerCase();
-          if(text.inclues(filter)){
+          if(text.includes(filter)){
             item.style.display = "list-item";
             found = true;
           }
