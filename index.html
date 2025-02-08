@@ -21,18 +21,33 @@
     
 
   <!----This is where data is imported-->
-    <ul id="buisness-list">
-      <li> <a href ="starbucks.html">Starbucks</a></li>
-      <li> <a href ="mcdonalds.html">McDonalds</a></li>
-      <li> <a href ="canes.html">canes</a></li>
-      <li> <a href ="tired.html">Tired</a></li>
-      <li> <a href ="save.html">Save</a></li>
-      <li> <a href ="me.html">ME</a></li>
-
-    </ul>
-
+  <ul id="business-list"></ul> <!-- Dynamic List of Businesses -->
+    <p id=""no-rsults" style=" "display: none; color:red;">Try Searching a Different Name</p>"
     <script>
-      document.getElementById("search").addEventListener("input", function (){
+        async function fetchBusinesses() {
+            try {
+                const response = await fetch("http://localhost:5000/yelp");
+                const businesses = await response.json();
+
+                const businessList = document.getElementById("business-list");
+                businessList.innerHTML = ""; 
+               businesses.forEach(business=> {
+                let listItem = document.createElement("li");
+                let link = document.createElement("a");
+                link.href = '${business.uil}';
+                link.textContent = business.name;
+                listItem.appendChild(link);
+                businessList.appendChild(listItem);
+               });
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        }
+
+        // Fetch businesses when the page loads
+        fetchBusinesses();
+
+    document.getElementById("search").addEventListener("input", function (){
     let filter = this.value.toLowerCase();
     let items = document.querySelectorAll("#buisness-list li");
         items.forEach((item)=>{
