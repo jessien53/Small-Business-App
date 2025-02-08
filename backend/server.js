@@ -1,3 +1,7 @@
+/*  Run backend first before frontend website using:
+    node server.js
+    otherwise frontend wont be able to fetch anything
+*/
 // Load environment variables from the .env file
 require('dotenv').config();
 
