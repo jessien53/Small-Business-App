@@ -4,6 +4,8 @@
 
     if node does not run do this before running it:
     npm install dotenv express axios cors
+
+    use Crtl + C on the terminal to kill the server
 */
 // Load environment variables
 import dotenv from "dotenv";
