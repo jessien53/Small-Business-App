@@ -1,0 +1,28 @@
+body{
+    font-family: system-ui;
+    background: rgb(206, 235, 225);
+    color: rgb(9, 44, 33);
+    text-align: center;
+
+
+}
+
+@font-face {
+    font-family: Monserrat;
+    src: url("/src/assets/Montserrat/Montserrat-VariableFont_wght.ttf");
+}
+
+@font-face {
+    font-family: MonserratItalic;
+    src: url("/src/assets/Montserrat/Montserrat-Italic-VariableFont_wght.ttf");
+}
+
+ul {
+ list-style: none;
+ padding: 0;
+}
+
+li{
+    font-size: 32px;
+    font-weight: bold;
+}

@@ -2,13 +2,14 @@
     node server.js
     otherwise frontend wont be able to fetch anything
 */
-// Load environment variables from the .env file
-require('dotenv').config();
+// Load environment variables
+import dotenv from "dotenv";
+dotenv.config();
 
 // Import required modules
-const express = require('express'); // Web framework for Node.js
-const axios = require('axios'); // Library for making HTTP requests
-const cors = require('cors'); // Middleware to enable Cross-Origin Resource Sharing
+import express from "express";
+import axios from "axios";
+import cors from "cors";
 
 const app = express(); // Create an Express application
 const PORT = 5000; // Define the port number for the server
@@ -16,6 +17,9 @@ const PORT = 5000; // Define the port number for the server
 // Middleware setup
 app.use(cors()); // Enable CORS to allow frontend requests from different origins
 app.use(express.json()); // Enable parsing of JSON request bodies
+
+// Store fetched businesses in memory
+let businesses = [];
 
 // Yelp API Endpoint (Fetch businesses in Chicago with < 500 Reviews)
 app.get("/yelp", async (req, res) => {
@@ -27,26 +31,27 @@ app.get("/yelp", async (req, res) => {
           headers: { Authorization: `Bearer ${apiKey}` },
       });
 
-      const yelpData = response.data.businesses
-          .filter((business) => business.review_count < 500) // Only keep businesses with < 500 reviews
-          .map((business) => ({
-              
-              name: business.name,
-              type: business.categories[0]?.title || "Unknown",
-              price: business.price || "N/A",
-              address: business.location.address1,
-              contact: business.display_phone || "N/A",
-              rating: business.rating,
-              review_count: business.review_count, // Include review count in response
-              description: business.alias || "No description available",
-              hours: business.hours ? business.hours[0].open : "Not available",
-              
-          }));
+      // Store the filtered businesses in memory
+      businesses = response.data.businesses
+      .filter((business) => business.review_count < 500)
+      .map((business) => ({
+          name: business.name,
+          type: business.categories[0]?.title || "Unknown",
+          price: business.price || "N/A",
+          address: business.location.address1,
+          contact: business.display_phone || "N/A",
+          rating: business.rating,
+          review_count: business.review_count,
+          description: business.alias || "No description available",
+      }));
 
-      res.json(yelpData);
+      res.json(businesses);
   } catch (error) {
-      res.status(500).json({ error: "Failed to fetch Yelp data", details: error.message });
-  }
+    console.error("Yelp API Error:", error.message);
+    res.status(500).json({ 
+        error: "Failed to fetch Yelp data", 
+        details: error.message 
+    });  }
 });
 
 // get specific business by name
