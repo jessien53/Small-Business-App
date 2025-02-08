@@ -12,9 +12,11 @@ There are many features we would like to implement into the website. Some of the
 
 ## How to run
 - Download all files
-- Run the server by executing this in the terminal: node server.js
-  - If this does not work, you need to install the necessary modules. Execute this in the terminal: npm install dotenv express axios cors
-  - Then try to run the server again: node server.js
+- Run the server by executing this in the terminal:
+  - node server.js
+- If this does not work, you need to install the necessary modules. Execute this in the terminal:
+  - npm install dotenv express axios cors
+- Then try to run the server again: node server.js
 - Open the index.html
 - You're on the website!
 
