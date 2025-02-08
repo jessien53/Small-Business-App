@@ -26,7 +26,7 @@
   <ul id="business-list"></ul> <!-- Dynamic List of Businesses -->
     <p id="no-rsults" style="display: none; color:red;">Try Searching a Different Name</p>
     <script>
-       async function fetchBusinesses() {
+      async function fetchBusinesses() {
     try {
         const response = await fetch("http://localhost:5000/yelp"); // Ensure API is running
         const businesses = await response.json();
@@ -37,8 +37,6 @@
         businesses.forEach(business => {
             let listItem = document.createElement("li");
             let link = document.createElement("a");
-
-            // ✅ Corrected business URL link using template literals
             link.href = `business.html?id=${business.id}`; 
             link.textContent = business.name;
 
@@ -53,9 +51,6 @@
 
 // Fetch businesses when the page loads
 fetchBusinesses();
-
-        // Fetch businesses when the page loads
-        fetchBusinesses();
 
     document.getElementById("search").addEventListener("input", function (){
     let filter = this.value.toLowerCase();
