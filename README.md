@@ -18,4 +18,4 @@ There are many features we would like to implement into the website. Some of the
 - Open the index.html
 - You're on the website!
 
-To close: press Ctrl + C in terminal that is running node
+**To close**: press Ctrl + C in terminal that is running node
