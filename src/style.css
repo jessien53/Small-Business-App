@@ -5,7 +5,7 @@ body{
     text-align: center;
 }
 
-#backgroundImage {
+#backgroundImageIndex {
     position: fixed;
     top: 0;
     left: 0;
@@ -13,6 +13,20 @@ body{
     height: 100vh;
     image-orientation: from-image;
     background-image: url(/src/assets/homeBackground.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    z-index: -1;
+}
+
+#backgroundImageBusiness {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    image-orientation: from-image;
+    background-image: url(/src/assets/businessBKG.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
