@@ -1,0 +1,74 @@
+body{
+    font-family: system-ui;
+    background: rgb(198, 235, 255);
+    color: rgb(9, 44, 33);
+    text-align: center;
+}
+
+#backgroundImage {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    image-orientation: from-image;
+    background-image: url(/src/assets/blankFeed.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    z-index: -1;
+}
+
+
+* {box-sizing: border-box}
+
+/* Container needed to position the overlay. Adjust the width as needed */
+.container {
+  position: relative;
+  width: 30%;
+  max-width: 300px;
+  position: absolute;
+  left: 42%;
+  right: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Make the image to responsive */
+.image {
+    display: block;
+    width: 200%;
+    height: 140%;
+    margin-top: 10%;
+    margin-block-start: 10%;
+}
+
+/* The overlay effect - lays on top of the container and over the image */
+.overlay {
+    position: absolute;
+    bottom: 0;
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.5); /* Black see-through */
+    color: #f1f1f1;
+    width: 75%;
+    transition: .5s ease;
+    opacity:0;
+    color: white;
+    font-size: 20px;
+    padding: 20px;
+    text-align: center;
+  }
+
+/* When you mouse over the container, fade in the overlay title */
+/* When you mouse over the container, fade in the overlay title */
+.container:hover .overlay {
+    opacity: 1;
+  }
+@font-face {
+    font-family: Monserrat;
+    src: url("/src/assets/Montserrat/Montserrat-VariableFont_wght.ttf");
+}
+
+@font-face {
+    font-family: MonserratItalic;
+    src: url("/src/assets/Montserrat/Montserrat-Italic-VariableFont_wght.ttf");
+}
