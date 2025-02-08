@@ -37,14 +37,14 @@ async function fetchYelpBusinesses(apiKey, offset = 0) {
 
 // Yelp API Endpoint (Fetch businesses in Chicago with < 500 Reviews)
 app.get("/yelp", async (req, res) => {
-  try {
-      const apiKey = process.env.YELP_API_KEY;
-      const page = parseInt(req.query.page) || 1; //default to page 1
-      const limit = parseInt(req.query.limit) || 50;
-      const offset = (page -1) * limit;
-      const ratingFilter = parseFloat(req.query.rating) || 0;
-      let allBusinesses = [];
-      // Make multiple requests to get more businesses
+    try {
+        const apiKey = process.env.YELP_API_KEY;
+        const page = parseInt(req.query.page) || 1; //default to page 1
+        const limit = parseInt(req.query.limit) || 50;
+        const offset = (page -1) * limit;
+        const ratingFilter = parseFloat(req.query.rating) || 0;
+        let allBusinesses = [];
+        // Make multiple requests to get more businesses
         // Yelp allows up to 1000 results with offset
         const numberOfRequests = 3; // This will get 150 businesses (3 * 50)
         
@@ -66,6 +66,7 @@ app.get("/yelp", async (req, res) => {
       businesses = allBusinesses
         .filter((business) => business.review_count < 500)
         .map((business) => ({
+            id: business.id,
             name: business.name,
             type: business.categories[0]?.title || "Unknown",
             price: business.price || "N/A",
@@ -78,8 +79,8 @@ app.get("/yelp", async (req, res) => {
 
       res.json(businesses);
   } catch (error) {
-    console.error("Yelp API Error:", error.message);
-    res.status(500).json({ 
+        console.error("Yelp API Error:", error.message);
+        res.status(500).json({ 
         error: "Failed to fetch Yelp data", 
         details: error.message 
     });  }
