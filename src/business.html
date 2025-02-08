@@ -1,0 +1,46 @@
+<html lang= "en">
+  <head>
+    <meta charset= "UTF-8">
+    <meta name= "viewport" content = "width=device-width, initial-scale=1.0">
+    <title> Business Details </title>
+    <style>
+      body {text-align: center;}
+    </style>
+    <link rel="stylesheet" href="/src/style.css" />
+
+    </head>
+  <body>
+    <h2 id="business-name"> Loading...</h2>
+    <p id="business-type"></p>
+    <p id="business-rating"></p>
+    <p id="business-location"></p>
+
+    <a href="index.html"> Back to Search</a>
+
+    <script>
+      async function loadBusinessData(){
+        const params = new URLSearchParams(window.location.search);
+        const businessName = params.get("name");
+        
+        try{
+          const response = await fetch("http://localhost:5000/yelp");
+          const businesses = await response.json();
+
+          const business = businesses.find(b => b.name === businessName);
+
+          document.getElementByID("business- name").textContent = business.name;
+          document.getElementByID("business- type").textContent = 'Type: ${business.type || "Unkown"}';
+          document.getElementByID("business- rating").textContent = 'Rating:⭐⭐⭐⭐⭐ ${business.rating || "Unkown"}';
+          document.getElementByID("business- location").textContent = 'Location: ${business.location || "Unkown"}';
+
+        }catch(error){
+          console.error("Error loading business data:", error)
+        }
+
+      }
+      loadBusinessData();
+    
+    </script>
+
+</body>
+</html>
