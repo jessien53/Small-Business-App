@@ -16,7 +16,7 @@
     <p id="business-address"></p>
     <p id="business-contact"></p>
     <p id="business-rating"></p>
-    <p id="business-description"></p>
+   
    
 
     <a href="index.html"> Back to Search</a>
@@ -39,7 +39,6 @@
           document.getElementById("business-address").textContent = `Address: ${business.address || "Unknown"}`;
           document.getElementById("business-contact").textContent = `Contact: ${business.contact || "Unknown"}`;
           document.getElementById("business-rating").textContent = `Rating:⭐⭐⭐⭐⭐ ${business.rating || "Unknown"}`;
-          document.getElementById("business-description").textContent = `Description: ${business.description || "Unknown"}`;
 
         }catch(error){
           console.error("Error loading business data:", error)
