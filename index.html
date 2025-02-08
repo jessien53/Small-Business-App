@@ -1,0 +1,45 @@
+<html lang= "en">
+  <head>
+    <meta charset= "UTF-8">
+    <meta name= "viewport"
+ content = "width=device-width, initial-scale=1.0">
+    <title> Search for a Small Buisness </title>
+    <style>
+      body {text-align: center;}
+      input{ width: 300px; padding: 10px; font-size:16px;}
+    </style>
+    </head>
+  <body>
+    <h2> Search for a Small Buisness </h2>
+    <input type="text" id="search" placeholder = "Start typing...">
+    
+
+  <!----This is where data is imported-->
+    <ul id="buisness-list">
+      <li> <a href ="starbucks.html">Starbucks</a></li>
+      <li> <a href ="mcdonalds.html">McDonalds</a></li>
+      <li> <a href ="canes.html">canes</a></li>
+      <li> <a href ="tired.html">Tired</a></li>
+      <li> <a href ="save.html">Save</a></li>
+      <li> <a href ="me.html">ME</a></li>
+
+    </ul>
+
+
+
+
+
+    <script>
+      document.getElementById("search").addEventListener("input", function (){
+    let filter = this.value.toLowerCase();
+    let items = document.querySelectorAll("#buisness-list li");
+        items.forEach((item)=>{
+          let text = item.textContent.toLowerCase();
+          item.style.display = text.includes(filter) ? "block" : "none";
+        });
+      });
+  
+    </script>
+    
+  </body>
+  </html>
